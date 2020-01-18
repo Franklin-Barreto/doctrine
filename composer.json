@@ -1,0 +1,21 @@
+{
+	"autoload" : {
+		"psr-4" : {
+			"FpBarreto\\Doctrine\\" : "src"
+		}
+	},
+	"description" : "Personal project to learn doctrine",
+	"require" : {
+		"php" : ">=7.4",
+		"doctrine/orm" : "~2.7",
+		"doctrine/migrations": "^2.2"
+	},
+	"authors" : [{
+			"name" : "Franklin Barreto",
+			"email" : "franklin-barreto@hotmail.com"
+		}
+	],
+	"require-dev" : {
+		"phpunit/phpunit" : "~8.5"
+	}
+}
