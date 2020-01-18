@@ -35,6 +35,12 @@ class StudentService
         return $this;
     }
 
+    public function delete(Student $student): self
+    {
+        $this->entityManager->remove($student);
+        return $this;
+    }
+
     public function flush(): self
     {
         $this->entityManager->flush();
