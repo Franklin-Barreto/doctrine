@@ -5,6 +5,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use FpBarreto\Doctrine\Entity\Student;
 use Doctrine\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityNotFoundException;
 
 class StudentService
 {
@@ -35,10 +36,23 @@ class StudentService
         return $this;
     }
 
-    public function delete(Student $student): self
+    public function update(Student $student): self
     {
-        $this->entityManager->remove($student);
+        $this->entityManager->persist($student);
         return $this;
+    }
+
+    public function delete(int $id): self
+    {
+        try {
+            $student = $this->entityManager->getReference(Student::class, $id);
+            $this->entityManager->remove($student);
+        } catch (EntityNotFoundException $e) {
+            echo "Id not found";
+        } finally {
+
+            return $this;
+        }
     }
 
     public function flush(): self

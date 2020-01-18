@@ -28,7 +28,7 @@ class Student
 
     /**
      *
-     * @OneToMany(targetEntity="Phone", mappedBy="student",cascade={"remove","persist"})
+     * @OneToMany(targetEntity="Phone", mappedBy="student",cascade={"persist","remove"})
      */
     private Collection $phoneNumbers;
 
