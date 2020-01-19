@@ -1,16 +1,15 @@
 <?php
 namespace FpBarreto\Doctrine\Entity;
 
-use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 /**
  *
  * @author frank
  * @Entity
  */
-class Student
-{
+class Student{
 
     /**
      *
@@ -32,9 +31,16 @@ class Student
      */
     private Collection $phoneNumbers;
 
+    /**
+     *
+     * @ManyToMany(targetEntity="Course",mappedBy="students",cascade={"persist","remove"})
+     */
+    private Collection $courses;
+
     public function __construct(string $name)
     {
         $this->phoneNumbers = new ArrayCollection();
+        $this->courses = new ArrayCollection();
         $this->name = $name;
     }
 
@@ -54,7 +60,7 @@ class Student
         return $this;
     }
 
-    public function setPhoneNumber(Phone $phone): self
+    public function addPhoneNumber(Phone $phone): self
     {
         $this->phoneNumbers->add($phone);
         $phone->setStudent($this);
@@ -64,5 +70,29 @@ class Student
     public function getPhoneNumbers(): Collection
     {
         return $this->phoneNumbers;
+    }
+
+    public function addCourse(Course $course): self
+    {
+        if ($this->courses->contains($course)) {
+            return $this;
+        }
+        $this->courses->add($course);
+        $course->addStudent($this);
+        return $this;
+    }
+
+    public function getCourses(): Collection
+    {
+        return $this->courses;
+    }
+
+    public function isEqual (Student $student)
+    {
+        if (! $student instanceof Student) {
+            throw new \InvalidArgumentException("Can only compare to other Student instance");
+        }
+        
+       return $this->name === $student->getName();
     }
 }

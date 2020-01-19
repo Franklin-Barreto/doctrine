@@ -6,6 +6,8 @@ use FpBarreto\Doctrine\Entity\Student;
 use Doctrine\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityNotFoundException;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 class StudentService
 {
@@ -14,10 +16,13 @@ class StudentService
 
     private ObjectRepository $repository;
 
+    private Collection $students;
+
     public function __construct(EntityManagerInterface $entityManager)
     {
         $this->repository = $entityManager->getRepository(Student::class);
         $this->entityManager = $entityManager;
+        $this->students = new ArrayCollection();
     }
 
     public function findAll(): array
