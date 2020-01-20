@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityNotFoundException;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use FpBarreto\Doctrine\Entity\Phone;
 
 class StudentService
 {
@@ -45,6 +46,13 @@ class StudentService
     {
         $this->entityManager->persist($student);
         return $this;
+    }
+
+    public function coursesByStudent()
+    {
+        $dql = 'SELECT FROM Student s JOIN s.phoneNumbers p JOIN s.courses c';
+        $query = $this->entityManager->createQuery($dql);
+        return $query->getResult();
     }
 
     public function delete(int $id): self

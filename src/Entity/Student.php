@@ -9,7 +9,8 @@ use Doctrine\Common\Collections\Collection;
  * @author frank
  * @Entity
  */
-class Student{
+class Student
+{
 
     /**
      *
@@ -27,9 +28,9 @@ class Student{
 
     /**
      *
-     * @OneToMany(targetEntity="Phone", mappedBy="student",cascade={"persist","remove"})
+     * @OneToMany(targetEntity="Phone", mappedBy="student",cascade={"persist","remove"}, fetch="EAGER")
      */
-    private Collection $phoneNumbers;
+    private ?Collection $phoneNumbers = null;
 
     /**
      *
@@ -87,12 +88,12 @@ class Student{
         return $this->courses;
     }
 
-    public function isEqual (Student $student)
+    public function isEqual(Student $student)
     {
         if (! $student instanceof Student) {
             throw new \InvalidArgumentException("Can only compare to other Student instance");
         }
-        
-       return $this->name === $student->getName();
+
+        return $this->name === $student->getName();
     }
 }
